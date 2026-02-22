@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio / Digital Store</title>
+  <style>
+    :root{
+      --bg:#0b0b0c;
+      --card:#160909;
+      --accent:#ff4f4f;
+      --accent-2:#ff7b92;
+      --muted:#b9b9b9;
+      --pink:#ff69a6;
+      --glass: rgba(255,255,255,0.03);
+      --round:22px;
+      --radius-lg:28px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.6);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(150,10,10,0.12), transparent 6%),
+                  radial-gradient(1000px 400px at 90% 90%, rgba(90,10,10,0.08), transparent 10%),
+                  var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    /* Center wrapper */
+    .wrap{
+      max-width:980px;
+      margin:40px auto;
+      padding:28px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),#b73535);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:20px;
+      box-shadow: 0 6px 20px rgba(255,80,80,0.08);
+    }
+    .brand h1{margin:0;font-size:20px;letter-spacing:1px;}
+    .brand p{margin:0;color:var(--muted);font-size:12px}
+
+    /* hero */
+    .hero{
+      margin-top:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:var(--radius-lg);
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,75,75,0.06);
+    }
+
+    .hero-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+    .title{
+      font-size:44px;
+      line-height:1;
+      font-weight:800;
+      color: #fff;
+    }
+    .subtitle{
+      font-size:20px;
+      color:var(--accent);
+      font-weight:700;
+      margin-top:6px;
+    }
+
+    .tagline{
+      color:var(--muted);
+      margin-top:6px;
+      font-size:14px;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:10px;
+    }
+
+    .btn{
+      background:transparent;
+      color:#fff;
+      border-radius:18px;
+      padding:14px 18px;
+      border:2px solid rgba(255,120,120,0.12);
+      cursor:pointer;
+      font-weight:700;
+      letter-spacing:0.6px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+    }
+    .btn.primary{
+      background: linear-gradient(90deg,var(--accent),#ff6b6b);
+      color:#fff;
+      border: none;
+      padding:14px 22px;
+      box-shadow: 0 10px 30px rgba(255,75,75,0.12);
+    }
+
+    /* pricing cards */
+    .plans{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:18px;
+      margin-top:20px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:22px;
+      padding:22px;
+      border:1px solid rgba(255,75,75,0.06);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+    }
+    .card h3{margin:8px 0 4px 0;font-size:22px}
+    .price{
+      font-size:44px;
+      color:var(--accent);
+      font-weight:800;
+      margin:6px 0 16px 0;
+    }
+    .features{list-style:none;padding:0;margin:0 0 18px 0}
+    .features li{
+      display:flex;gap:12px;align-items:flex-start;padding:8px 0;color:var(--muted);font-size:15px;
+    }
+    .tick{
+      min-width:36px;height:36px;border-radius:50%;
+      background:linear-gradient(180deg,var(--pink),#d64a9a);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:700;
+      box-shadow:0 6px 18px rgba(255,80,150,0.08);
+    }
+    .buy{
+      width:100%;
+      border-radius:14px;
+      padding:14px;
+      text-align:center;
+      font-weight:800;
+      background:transparent;
+      border:2px solid rgba(255,75,75,0.2);
+      cursor:pointer;
+      color:#fff;
+    }
+    .buy.outline{
+      background:transparent;
+    }
+
+    /* footer sales blurb */
+    .blurb{
+      text-align:center;
+      margin:28px 0 6px 0;
+      color:var(--muted);
+    }
+
+    /* Payment modal */
+    .modal, .admin-modal, .age-modal{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:2000;
+      backdrop-filter: blur(6px);
+    }
+    .modal .inner, .admin-modal .inner, .age-modal .inner{
+      width:min(540px,96%);
+      background: linear-gradient(180deg,#081018, #15060a);
+      border-radius:20px;
+      padding:20px;
+      border:1px solid rgba(255,75,75,0.06);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.7);
+      color:#fff;
+    }
+
+    .payment-header{
+      text-align:center;
+      margin-bottom:12px;
+    }
+    .payment-header h2{margin:0;font-size:28px;color:#fff}
+    .payment-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:12px 0 18px 0;
+    }
+    .pay-option{
+      border-radius:12px;
+      padding:12px;
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;
+      min-height:72px;
+      cursor:pointer;
+    }
+    .pay-option svg{width:36px;height:36px}
+    .field{
+      display:block;
+      width:100%;
+      margin:8px 0;
+      padding:12px 14px;
+      border-radius:12px;
+      background:rgba(255,255,255,0.02);
+      border:1px dashed rgba(255,255,255,0.04);
+      color:#fff;
+      outline:none;
+    }
+    .upload{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:12px;
+      border:2px dashed rgba(255,255,255,0.03);
+      margin-top:8px;color:var(--muted);
+    }
+    .small{font-size:13px;color:var(--muted)}
+
+    /* admin */
+    .admin-link{
+      font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;
+    }
+    .admin-panel{display:flex;flex-direction:column;gap:10px}
+    .admin-panel label{font-size:13px;color:var(--muted)}
+    .admin-panel input, .admin-panel textarea{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.01);color:#fff}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+
+    /* age modal layout (centered) */
+    .age-box{
+      text-align:center;
+      padding:28px;border-radius:20px;border:2px solid rgba(255,75,75,0.08);
+    }
+    .age-box h2{font-size:34px;margin:0 0 12px 0;color:var(--accent)}
+    .age-box p{color:var(--muted)}
+    .age-actions{display:flex;gap:12px;justify-content:center;margin-top:18px}
+    .pill{
+      display:inline-block;padding:14px 26px;border-radius:40px;font-weight:800;cursor:pointer;
+      border:none;
+    }
+    .pill.ghost{background:transparent;color:var(--muted);border:2px solid rgba(255,255,255,0.03)}
+    .pill.main{background:linear-gradient(90deg,var(--accent),#ff6b6b);color:#fff}
+
+    /* small screens tweaks */
+    @media (max-width:540px){
+      .title{font-size:34px}
+      .price{font-size:36px}
+      .payment-grid{grid-template-columns:repeat(3,1fr)}
+      .wrap{padding:16px;margin:18px auto}
+    }
+
+    /* tiny helper */
+    .muted{color:var(--muted)}
+    .danger{color:#ff8b8b}
+    .center{text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="page">
+    <header>
+      <div class="brand">
+        <div class="logo">DG</div>
+        <div>
+          <h1>Digital Goods — Portfolio</h1>
+          <p>Sell e-books · deliver instantly · manage leads</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="admin-link" id="open-admin">Admin Panel</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-top">
+          <div>
+            <div class="subtitle">RITIKA EXCLUSIVE</div>
+            <div id="hero-title" class="title">Full. Unfiltered. Raw.</div>
+            <div class="tagline">Digital store example — use this template to sell e-books, bundles and single downloads. Mobile-first layout inspired by your images.</div>
+            <div class="cta-row">
+              <button class="btn primary" id="cta-buy">Unlock Now — ₹199</button>
+              <button class="btn" id="cta-contact">Get Leads Automation</button>
+            </div>
+          </div>
+
+          <div style="min-width:240px;max-width:320px;">
+            <div style="background:linear-gradient(180deg, rgba(255,80,80,0.06), rgba(0,0,0,0.0)); padding:20px; border-radius:18px;">
+              <div style="height:160px;border-radius:12px;background:linear-gradient(180deg,#120405,#1a0507);display:flex;align-items:center;justify-content:center;">
+                <div style="color:#fff;opacity:0.12;font-weight:900;font-size:36px">Preview</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plans" aria-label="plans">
+          <!-- Starter -->
+          <div class="card">
+            <h3>Starter Access</h3>
+            <div class="price">₹199</div>
+            <ul class="features">
+              <li><div class="tick">✓</div><div><strong>20 Full photos</strong><br><span class="muted">Mobile friendly • instant delivery after verification</span></div></li>
+              <li><div class="tick">✓</div><div><strong>50+ HD previews</strong><br><span class="muted">Quick samples</span></div></li>
+              <li><div class="tick">✓</div><div><strong>Instant delivery</strong><br><span class="muted">After payment proof</span></div></li>
+            </ul>
+            <button class="buy outline" data-plan="Starter Access" data-price="199">UNLOCK NOW — ₹199</button>
+          </div>
+
+          <!-- Ultimate -->
+          <div class="card">
+            <h3>Ultimate Vault</h3>
+            <div class="price">₹999</div>
+            <ul class="features">
+              <li><div class="tick">✓</div><div><strong>200+ premium photos</strong><br><span class="muted">High variety</span></div></li>
+              <li><div class="tick">✓</div><div><strong>500+ ultra HD</strong><br><span class="muted">Every angle</span></div></li>
+              <li><div class="tick">✓</div><div><strong>Lifetime access</strong><br><span class="muted">Future updates free</span></div></li>
+            </ul>
+            <button class="buy outline" data-plan="Ultimate Vault" data-price="999">UNLOCK NOW — ₹999</button>
+          </div>
+        </div>
+
+        <div class="blurb">
+          <div style="max-width:760px;margin:0 auto">This is an example single-page site. When user clicks a "Buy" button the payment UI (similar to the second image you showed) opens. Use the <strong>Admin Panel</strong> to configure UPI ID, products, and toggle behaviour.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Payment Modal (hidden until triggered) -->
+  <div class="modal" id="payment-modal" style="display:none;">
+    <div class="inner" role="dialog" aria-modal="true">
+      <div class="payment-header">
+        <h2 id="pay-title">Pay ₹199</h2>
+        <div class="small muted" id="pay-plan">Plan: Starter Access</div>
+      </div>
+
+      <div>
+        <div class="payment-grid" id="payment-grid">
+          <div class="pay-option" data-method="gpay">
+            <!-- simple google icon -->
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M44.5 20.5H24v7h11.9C34.2 32.2 29.6 36 24 36c-7 0-12.8-5.8-12.8-13s5.8-13 12.8-13c3.4 0 6.5 1.3 8.8 3.5l5.6-5.6C34.6 3 29.6 1 24 1 11.9 1 2.5 10.4 2.5 22.5S11.9 44 24 44c10.8 0 19.7-8 20-18.5."></path></svg>
+            <div class="small muted">G-PAY</div>
+          </div>
+          <div class="pay-option" data-method="phonepe">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            <div class="small muted">PHONEPE</div>
+          </div>
+          <div class="pay-option" data-method="paytm">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#fff" opacity="0.12"/></svg>
+            <div class="small muted">PAYTM</div>
+          </div>
+        </div>
+
+        <input class="field" id="buyer-email" placeholder="Enter your email address" type="email" />
+
+        <div style="margin-top:10px">
+          <label class="small muted">Upload Payment Screenshot (optional)</label>
+          <div class="upload" id="upload-area">
+            <input type="file" id="payment-proof" accept="image/*" style="display:none" />
+            <div id="upload-hint">No file chosen — click to upload</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
+          <button class="btn primary" id="confirm-pay">I have paid — Submit</button>
+          <button class="btn" id="close-pay">Cancel</button>
+        </div>
+
+        <div class="small muted" style="margin-top:12px">If UPI is configured in Admin, a UPI link/QR will be generated here for quick payment.</div>
+
+        <div id="upi-area" style="margin-top:12px;display:none">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div id="upi-qr" style="width:110px;height:110px;border-radius:12px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center">QR</div>
+            <div>
+              <div class="muted">UPI ID</div>
+              <div id="upi-id" style="font-weight:700"></div>
+              <div style="margin-top:6px"><a id="upi-link" class="btn" style="padding:8px 12px;border-radius:10px;">Open UPI</a></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Modal -->
+  <div class="admin-modal" id="admin-modal" style="display:none;">
+    <div class="inner" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 style="margin:0">Admin Panel</h3>
+        <div style="font-size:13px;color:var(--muted);">Local demo • stored in browser</div>
+      </div>
+
+      <div class="admin-panel" id="admin-panel">
+        <label>Admin password (required to unlock)</label>
+        <input type="password" id="admin-password" placeholder="Set or enter admin password" />
+
+        <div class="row">
+          <div class="col">
+            <label>Default UPI ID (e.g. name@upi)</label>
+            <input id="admin-upi" placeholder="yourupi@bank" />
+          </div>
+          <div style="min-width:120px;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <button class="btn primary" id="save-admin">Save</button>
+            <button class="btn" id="close-admin">Close</button>
+          </div>
+        </div>
+
+        <label>Products JSON (simple editable list)</label>
+        <textarea id="products-json" rows="6" style="width:100%;"></textarea>
+
+        <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;">
+          <div>
+            <label><input type="checkbox" id="toggle-buy-interface" /> Show payment interface on Buy click</label>
+          </div>
+          <div>
+            <button id="reset-data" class="btn">Reset Demo Data</button>
+          </div>
+        </div>
+
+        <div style="margin-top:8px">
+          <div class="small muted">Notes: This admin panel saves settings to your browser (localStorage) for demo. Configure UPI ID here to generate a UPI link for buyers. You can manage product titles/prices in the JSON above. To protect this demo, set a password then save.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Age Modal (shown on first visit) -->
+  <div class="age-modal" id="age-modal" style="display:none;">
+    <div class="inner age-box">
+      <h2>18+ ONLY</h2>
+      <p class="muted">Explicit content. You must be 18+ to enter.</p>
+      <div class="age-actions">
+        <button class="pill main" id="age-yes">YES — I AM 18+</button>
+        <button class="pill ghost" id="age-no">Under 18 — Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*******************************
+     * Demo single-page store script
+     * Features:
+     * - Age gate modal on first visit
+     * - Payment modal that mimics provided image layout
+     * - Admin panel stored in localStorage: set UPI ID, products, toggle behavior
+     * - When "Buy" is clicked the payment modal opens and (if UPI configured) generates UPI URI and QR link
+     *******************************/
+
+    // Utilities
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    // Default demo data
+    const DEFAULT_DATA = {
+      adminPassword: "admin123",
+      upiId: "",
+      showPaymentInterface: true,
+      products: [
+        { title: "Starter Access", price: 199, id: "starter" },
+        { title: "Ultimate Vault", price: 999, id: "ultimate" }
+      ]
+    };
+
+    function loadData(){
+      try{
+        const raw = localStorage.getItem('dg_demo_data');
+        if (!raw) return {...DEFAULT_DATA};
+        const parsed = JSON.parse(raw);
+        return {...DEFAULT_DATA, ...parsed};
+      }catch(e){
+        console.warn("loadData err", e);
+        return {...DEFAULT_DATA};
+      }
+    }
+    function saveData(data){
+      localStorage.setItem('dg_demo_data', JSON.stringify(data));
+    }
+
+    // initialize
+    let DATA = loadData();
+
+    // Age modal behavior
+    const ageModal = $('#age-modal');
+    const seen = localStorage.getItem('dg_age_verified');
+    if (!seen){
+      ageModal.style.display = 'flex';
+    }
+
+    $('#age-yes').addEventListener('click', ()=>{
+      localStorage.setItem('dg_age_verified','1');
+      ageModal.style.display = 'none';
+    });
+    $('#age-no').addEventListener('click', ()=>{
+      // redirect away - for demo we just close with a message
+      ageModal.style.display = 'none';
+      alert("You chose to leave. For demo, page will stay but restrict actions.");
+      // optionally hide interactive elements
+    });
+
+    // Admin modal
+    const adminModal = $('#admin-modal');
+    $('#open-admin').addEventListener('click', ()=> {
+      // show admin modal
+      populateAdmin();
+      adminModal.style.display = 'flex';
+    });
+    $('#close-admin').addEventListener('click', ()=> adminModal.style.display='none');
+
+    function populateAdmin(){
+      $('#admin-password').value = '';
+      $('#admin-upi').value = DATA.upiId || '';
+      $('#products-json').value = JSON.stringify(DATA.products, null, 2);
+      $('#toggle-buy-interface').checked = !!DATA.showPaymentInterface;
+    }
+
+    $('#save-admin').addEventListener('click', ()=>{
+      const pass = $('#admin-password').value;
+      // require a password to update admin settings
+      if (!pass){
+        alert("Set an admin password to save changes (for demo).");
+        return;
+      }
+      // if first-time setting, accept. Else require matching password
+      const storedPass = DATA.adminPassword || DEFAULT_DATA.adminPassword;
+      if (storedPass && storedPass !== "admin123" && pass !== storedPass){
+        alert("Wrong admin password.");
+        return;
+      }
+      DATA.adminPassword = pass;
+      DATA.upiId = $('#admin-upi').value.trim();
+      DATA.showPaymentInterface = !!$('#toggle-buy-interface').checked;
+      try{
+        DATA.products = JSON.parse($('#products-json').value);
+      }catch(e){
+        alert("Products JSON invalid. Fix it and save again.");
+        return;
+      }
+      saveData(DATA);
+ 
